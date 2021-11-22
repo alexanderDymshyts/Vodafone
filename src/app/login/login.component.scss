@@ -1,0 +1,36 @@
+@import '../../styles.scss';
+
+@mixin centerContent {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+button {
+    background-color: $buttonColor !important;
+    color: $buttonTextColor !important;
+    letter-spacing: 2px;
+    border: 1px solid $borderColor !important;
+}
+
+button:hover{
+    background-color: $buttonHoverColor !important;
+}
+
+button:disabled,
+button[disabled]{
+  border: 1px solid $borderColor !important;
+  background-color: $disabledButtonColor !important;
+  color: $disabledButtonTextColor !important;
+}
+
+label {
+    color: $labelColor;
+}
+
+.logo{    
+    color: $titleColor;
+    font-weight: bold;    
+}

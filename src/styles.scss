@@ -1,1 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~bootstrap/scss/bootstrap.scss';
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css");
+
+$buttonColor: #FF0000;
+$buttonTextColor: #FFFFFF;
+$labelColor: #8C92AC;
+$titleColor: #000000;
+$disabledButtonColor: #FF4D4D;
+$disabledButtonTextColor: #666666;
+$borderColor: #999999;
+$buttonHoverColor: #B30000;
