@@ -1,3 +1,5 @@
+// @import '../../styles.scss';
+
 .cart {
     height: 100vh
 }
@@ -10,12 +12,12 @@
 .line {
     width: 76px;
     height: 6px;
-    background: #63d19e
+    background: #FF0000;
 }
 
 .steps {
     display: flex;
-    background-color: #63d19e;
+    background-color: #FF0000;
     color: #fff;
     font-size: 12px;
     width: 30px;
@@ -27,7 +29,7 @@
 
 .check1 {
     display: flex;
-    background-color: #63d19e;
+    background-color: #FF0000;
     color: #fff;
     font-size: 17px;
     width: 60px;
@@ -38,9 +40,9 @@
     margin-bottom: 10px
 }
 
-.invoice-link {
-    font-size: 15px
-}
+// .invoice-link {
+//     font-size: 15px
+// }
 
 .order-button {
     height: 50px
