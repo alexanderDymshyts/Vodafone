@@ -29,7 +29,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 
 What can be done:
-1. Translation
-2. JWT
-3. SSO
-4. Unit and E2E tests
+1. Several languages
+2. JWT + SSO
+3. Better Unit and E2E tests

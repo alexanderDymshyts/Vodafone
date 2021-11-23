@@ -5,11 +5,12 @@ import { TrackingComponent } from './tracking';
 
 const routes: Routes = [
   //{ path: '', component: TrackingComponent, canActivate: [AuthGuard] },  
-  { path: '', component: LoginComponent},
-  { path: 'tracking', component: TrackingComponent}
+  { path: '', redirectTo: '/login', pathMatch: 'full'},
+  { path: 'login', component: LoginComponent},
+  { path: 'tracking', component: TrackingComponent},
 
   // otherwise redirect to tracking
-  //{ path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '' }
 ];
 
 @NgModule({

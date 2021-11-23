@@ -10,8 +10,13 @@ import { LoginComponent } from './login';
 import { ActivityComponent } from './activity';
 import { TrackingComponent } from './tracking';
 import { HeaderComponent } from './header';
+import { RequestService } from './services';
+import { TicketComponent } from './ticket/ticket.component';
+import { TicketService } from './services/ticket.service';
 
-const SERVICES: any = [
+const SERVICES = [
+  RequestService,
+  TicketService,
   // { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthenticationService]},
   // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
@@ -25,7 +30,8 @@ const COMPONENTS = [
   LoginComponent, 
   ActivityComponent,
   TrackingComponent,
-  HeaderComponent
+  HeaderComponent,
+  TicketComponent,
 ];
 
 const MODULES = [
@@ -39,7 +45,7 @@ const MODULES = [
 
 @NgModule({
   declarations: [
-    COMPONENTS,
+    COMPONENTS,    
   ],
   imports: [
     MODULES
