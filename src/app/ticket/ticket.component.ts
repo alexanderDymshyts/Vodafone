@@ -3,6 +3,7 @@ import { RxState } from '@rx-angular/state';
 import { ITicket, ITicketState } from '../intefaces';
 import { TicketService } from '../services/ticket.service';
 import { ToastrService } from 'ngx-toastr';
+import { Status } from '../enums';
 
 @Component({
   selector: 'app-ticket',
@@ -72,5 +73,13 @@ export class TicketComponent implements OnInit {
   stepCounter(i: number) {    
     i = i - 1;
     return new Array(i);
+  }
+
+  isCompleted(status: Status | undefined){
+    return status === Status.Completed;
+  }
+
+  isInProgress(status: Status | undefined){
+    return status === Status.InProgress;
   }
 }
