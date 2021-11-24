@@ -10,15 +10,14 @@ import { LoginComponent } from './login';
 import { ActivityComponent } from './activity';
 import { TrackingComponent } from './tracking';
 import { HeaderComponent } from './header';
-import { RequestService } from './services';
+import { ActivityService, RequestService, TicketService } from './services';
 import { TicketComponent } from './ticket/ticket.component';
-import { TicketService } from './services/ticket.service';
 import { ToastrModule } from 'ngx-toastr';
 
 const SERVICES = [
   RequestService,
   TicketService,
-  // { provide: APP_INITIALIZER, useFactory: appInitializer, multi: true, deps: [AuthenticationService]},
+  ActivityService
   // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 

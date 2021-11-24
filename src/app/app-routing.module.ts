@@ -9,9 +9,9 @@ const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full'},
   { path: 'login', component: LoginComponent},
   { path: 'tracking', component: TrackingComponent},
-  { path: 'activity', component: ActivityComponent},
+  { path: 'activity/:activityId', component: ActivityComponent},
 
-  // otherwise redirect to tracking
+  // otherwise redirect to login
   { path: '**', redirectTo: '' }
 ];
 

@@ -4,12 +4,15 @@ import { ITicket, ITicketState } from '../intefaces';
 import { TicketService } from '../services/ticket.service';
 import { ToastrService } from 'ngx-toastr';
 import { Status } from '../enums';
+import { Router } from '@angular/router';
+import { Activity } from '../models';
+import { ActivityService } from '../services';
 
 @Component({
   selector: 'app-ticket',
   templateUrl: './ticket.component.html',
   styleUrls: ['./ticket.component.scss'],
-  providers: [TicketService, RxState]
+  providers: [RxState]
 })
 export class TicketComponent implements OnInit {
 
@@ -19,7 +22,9 @@ export class TicketComponent implements OnInit {
 
   constructor(private readonly ticketService: TicketService,
     private readonly state: RxState<ITicketState>,
-    private readonly toaster: ToastrService) { }
+    private readonly toaster: ToastrService,
+    private readonly router: Router,
+    private readonly activityService: ActivityService) { }
 
   ngOnInit(): void {
      this.ticketService.getTicket$(123).subscribe(x => {
@@ -30,6 +35,9 @@ export class TicketComponent implements OnInit {
         reopenable: x.reopenable,
         creationDate: x.creationDate ?? new Date(),
        };
+
+       this.activityService.addActivities(x.activities);       
+
        this.state.set(
        { 
            activitiesCount: x.activities.length,
@@ -39,8 +47,8 @@ export class TicketComponent implements OnInit {
      });
   }
 
-  viewActivity(){
-    console.log('Btn clicked');
+  viewActivity(activity: Activity){    
+    this.router.navigate(['/activity', activity.activityCode]);
   }
 
   reopenTicket(){

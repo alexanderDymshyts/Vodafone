@@ -1,52 +1,51 @@
-<div class="container mt-4 mb-4">
-    <div class="row d-flex cart align-items-center justify-content-center">
-        <div class="col-md-10">
-            <div class="card">  
-<div class="col-md-12 background-muted">
-    <div class="p-3 border-bottom">
-        <div class="d-flex justify-content-between align-items-center"> <span><i class="fa fa-clock-o text-muted"></i> 3 days delivery</span> <span><i class="fa fa-refresh text-muted"></i> 2 Max Revisions</span> </div>
-        <div class="mt-3">
-            <h6 class="mb-0">Illustraion in Sketch or AI</h6> <span class="d-block mb-0">Includes: Sketch, PSD, PNG, SVG, AI </span> <small>Min: 1 illustraion</small>
-            <div class="d-flex flex-column mt-3"> <small>
-                <i class="fa fa-clock-o text-muted"></i> Vector file</small> 
-                <small>
-                <i class="fa fa-check text-muted"></i> Sources files</small> </div>
+<ng-container *ngIf="activity$ | async as activity">  
+    <div class="container mt-4 mb-4">
+        <div class="row d-flex cart align-items-center justify-content-center">
+            <div class="col-md-10">
+                <div class="card">  
+    <div class="col-md-12 background-muted">
+        <div class="p-3 border-bottom">         
+            <div class="mt-3">
+                <span class="d-block mb-0">Activity: {{activity.activityCode}} </span> 
+                <span class="d-block mb-0">Status: {{activity.status}} </span>                
+                <span class="d-block mb-0">Message: {{activity.customerMessage}} </span> 
+            </div>
+        </div>       
+            <div class="row g-0 border-bottom">
+                <div class="col-md-6 border-right">
+                    <div class="p-3 d-flex justify-content-center align-items-center"> <span>Activity start date:</span> </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-3 d-flex justify-content-center align-items-center"> <span>{{activity.activityStart?.startDate}}</span> </div>
+                </div>
+            </div>       
+            <div class="row g-0 border-bottom">
+                <div class="col-md-6">
+                    <div class="p-3 d-flex justify-content-center align-items-center"> <span>Activity start time:</span> </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-3 d-flex justify-content-center align-items-center"> <span>{{activity.activityStart?.startTime}}</span> </div>
+                </div>
+            </div>        
+            <div class="row g-0 border-bottom">
+                <div class="col-md-6">
+                    <div class="p-3 d-flex justify-content-center align-items-center"> <span>Activity finish date:</span> </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-3 d-flex justify-content-center align-items-center"> <span>{{activity.activityFinish?.finishDate}}</span> </div>
+                </div>
+            </div>      
+            <div class="row g-0">
+                <div class="col-md-6">
+                    <div class="p-3 d-flex justify-content-center align-items-center"> <span class="font-weight-bold">Activity finish time:</span> </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="p-3 d-flex justify-content-center align-items-center"> <span class="font-weight-bold">{{activity.activityFinish?.finishTime}}</span> </div>
+                </div>
+            </div>       
         </div>
-    </div>
-    <div class="row g-0 border-bottom">
-        <div class="col-md-6 border-right">
-            <div class="p-3 d-flex justify-content-center align-items-center"> <span>x3</span> </div>
-        </div>
-        <div class="col-md-6">
-            <div class="p-3 d-flex justify-content-center align-items-center"> <span>$20 per unit</span> </div>
-        </div>
-    </div>
-    <div class="row g-0 border-bottom">
-        <div class="col-md-6">
-            <div class="p-3 d-flex justify-content-center align-items-center"> <span>Subtotal</span> </div>
-        </div>
-        <div class="col-md-6">
-            <div class="p-3 d-flex justify-content-center align-items-center"> <span>$60</span> </div>
-        </div>
-    </div>
-    <div class="row g-0 border-bottom">
-        <div class="col-md-6">
-            <div class="p-3 d-flex justify-content-center align-items-center"> <span>Processing fees</span> </div>
-        </div>
-        <div class="col-md-6">
-            <div class="p-3 d-flex justify-content-center align-items-center"> <span>$1.80</span> </div>
-        </div>
-    </div>
-    <div class="row g-0">
-        <div class="col-md-6">
-            <div class="p-3 d-flex justify-content-center align-items-center"> <span class="font-weight-bold">Total</span> </div>
-        </div>
-        <div class="col-md-6">
-            <div class="p-3 d-flex justify-content-center align-items-center"> <span class="font-weight-bold">$61.80</span> </div>
-        </div>
-    </div>
-</div>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</ng-container>

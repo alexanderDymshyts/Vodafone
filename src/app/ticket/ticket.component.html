@@ -1,5 +1,4 @@
-<ng-container *ngIf="ticket$ | async as ticket">  
-      
+<ng-container *ngIf="ticket$ | async as ticket">        
         <div class="container mt-4 mb-4">
             <div class="row d-flex cart align-items-center justify-content-center">
                 <div class="col-md-10">
@@ -15,8 +14,7 @@
                                                     </span>                                                                                                  
                                                 </div> 
                                                 <span class="line"></span>
-                                            </ng-container>                                            
-                                       
+                                            </ng-container>  
                                             <div class="steps"> <span class="font-weight-bold">{{activitiesCount}}</span> </div>
                                         </ng-container>
                                     </div>
@@ -42,7 +40,7 @@
                                                 <ng-container *ngIf="isCompleted(activity.status)">
                                                     <span>
                                                         <i class="fa fa-check"></i>                                            
-                                                            <button class="button-link text-decoration-none" (click)="viewActivity()">
+                                                            <button class="button-link text-decoration-none" (click)="viewActivity(activity)">
                                                             {{activity.activityCode}}
                                                         </button>                                             
                                                     </span> 
@@ -50,7 +48,7 @@
                                                 <ng-container *ngIf="isInProgress(activity.status)">
                                                     <span>
                                                         <i class="fa fa-clock-o"></i>   
-                                                        <button class="button-link text-decoration-none" (click)="viewActivity()">
+                                                        <button class="button-link text-decoration-none" (click)="viewActivity(activity)">
                                                             {{activity.activityCode}}
                                                         </button>  
                                                     </span> 
@@ -84,40 +82,7 @@
                                     <ng-container *ngIf="ticket.cancelable">                                        
                                         <button class="btn btn-danger btn-block cancel-btn" (click)="cancelTicket()">Cancel</button>                               
                                     </ng-container>
-                                </div>
-
-                                <!-- <div class="row g-0 border-bottom">
-                                    <div class="col-md-6 border-right">
-                                        <div class="p-3 d-flex justify-content-center align-items-center"> <span>x3</span> </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="p-3 d-flex justify-content-center align-items-center"> <span>$20 per unit</span> </div>
-                                    </div>
-                                </div>
-                                <div class="row g-0 border-bottom">
-                                    <div class="col-md-6">
-                                        <div class="p-3 d-flex justify-content-center align-items-center"> <span>Subtotal</span> </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="p-3 d-flex justify-content-center align-items-center"> <span>$60</span> </div>
-                                    </div>
-                                </div>
-                                <div class="row g-0 border-bottom">
-                                    <div class="col-md-6">
-                                        <div class="p-3 d-flex justify-content-center align-items-center"> <span>Processing fees</span> </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="p-3 d-flex justify-content-center align-items-center"> <span>$1.80</span> </div>
-                                    </div>
-                                </div>
-                                <div class="row g-0">
-                                    <div class="col-md-6">
-                                        <div class="p-3 d-flex justify-content-center align-items-center"> <span class="font-weight-bold">Total</span> </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="p-3 d-flex justify-content-center align-items-center"> <span class="font-weight-bold">$61.80</span> </div>
-                                    </div>
-                                </div> -->
+                                </div>                               
                             </div>
                         </div>                        
                     </div>
