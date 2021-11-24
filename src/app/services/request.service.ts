@@ -22,25 +22,11 @@ export class RequestService{
     }
 
     public reopenTicketRequest$(path: string): Observable<any> { 
-        return this.http.get<boolean>('../assets/responces/reopen-ticket.json');    
-        // return this.http.get(`${environment.apiUri + path}`, 
-        // {
-        //      headers: {
-        //     'Content-Type': 'application/json'
-        //     }, 
-        //     responseType: 'json'
-        // });
+        return this.http.get<boolean>('../assets/responces/reopen-ticket.json');  
     }
 
     public cancelTicketRequest$(path: string): Observable<any> { 
-        return this.http.get<boolean>('../assets/responces/cancel-ticket.json');    
-        // return this.http.get(`${environment.apiUri + path}`, 
-        // {
-        //      headers: {
-        //     'Content-Type': 'application/json'
-        //     }, 
-        //     responseType: 'json'
-        // });
+        return this.http.get<boolean>('../assets/responces/cancel-ticket.json'); 
     }
 
     // public sendPostRequest$(path: string, body: any): Observable<any> {

@@ -13,6 +13,7 @@ import { HeaderComponent } from './header';
 import { RequestService } from './services';
 import { TicketComponent } from './ticket/ticket.component';
 import { TicketService } from './services/ticket.service';
+import { ToastrModule } from 'ngx-toastr';
 
 const SERVICES = [
   RequestService,
@@ -41,6 +42,7 @@ const MODULES = [
   HttpClientModule,
   AppRoutingModule,
   BrowserAnimationsModule,
+  ToastrModule.forRoot(),
 ];
 
 @NgModule({

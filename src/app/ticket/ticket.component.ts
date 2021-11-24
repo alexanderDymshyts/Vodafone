@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { RxState } from '@rx-angular/state';
 import { ITicket, ITicketState } from '../intefaces';
 import { TicketService } from '../services/ticket.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-ticket',
@@ -16,7 +17,8 @@ export class TicketComponent implements OnInit {
   activities$ = this.state.select('activities');
 
   constructor(private readonly ticketService: TicketService,
-    private readonly state: RxState<ITicketState>) { }
+    private readonly state: RxState<ITicketState>,
+    private readonly toaster: ToastrService) { }
 
   ngOnInit(): void {
      this.ticketService.getTicket$(123).subscribe(x => {
@@ -42,18 +44,29 @@ export class TicketComponent implements OnInit {
 
   reopenTicket(){
       this.ticketService.reopenTicket$(this.state.get('ticket').woNum).subscribe(
-        x => {
-          console.log(x);
-        }
-      )
+        x => this.showToaster(x))
   }
 
   cancelTicket() {
     this.ticketService.cancelTicket$(this.state.get('ticket').woNum).subscribe(
-      x => {
-        console.log(x);
+      x => this.showToaster(x))
+  }
+
+  showToaster(result: boolean){
+    if(result){
+      this.successToaster();
+      }else{
+        this.errorToaster();
       }
-    )
+  }
+
+
+  successToaster(): void {
+    this.toaster.success('We made it :)', 'Vodafone 4 life');
+  }
+
+  errorToaster(): void {
+    this.toaster.error('Oh no, some went wrong :(', 'Vodafone 4 life');
   }
 
   stepCounter(i: number) {    

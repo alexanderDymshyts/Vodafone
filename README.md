@@ -33,3 +33,4 @@ What can be done:
 2. JWT + SSO
 3. Better Unit and E2E tests
 4. Toast for button result (advanced)
+5. Collapse buttons after they are clicked
