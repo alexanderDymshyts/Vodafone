@@ -36,6 +36,26 @@ export class TicketComponent implements OnInit {
      });
   }
 
+  viewActivity(){
+    console.log('Btn clicked');
+  }
+
+  reopenTicket(){
+      this.ticketService.reopenTicket$(this.state.get('ticket').woNum).subscribe(
+        x => {
+          console.log(x);
+        }
+      )
+  }
+
+  cancelTicket() {
+    this.ticketService.cancelTicket$(this.state.get('ticket').woNum).subscribe(
+      x => {
+        console.log(x);
+      }
+    )
+  }
+
   stepCounter(i: number) {    
     i = i - 1;
     return new Array(i);
