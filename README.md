@@ -32,3 +32,4 @@ What can be done:
 1. Several languages
 2. JWT + SSO
 3. Better Unit and E2E tests
+4. Toast for button result (advanced)
