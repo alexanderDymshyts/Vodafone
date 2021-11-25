@@ -35,3 +35,4 @@ What can be done:
 4. Toast for button result (advanced)
 5. Collapse buttons after they are clicked
 6. Catch exseptions
+7. ticket service with rxState

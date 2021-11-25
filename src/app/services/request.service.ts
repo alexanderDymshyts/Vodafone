@@ -10,8 +10,11 @@ export class RequestService{
 
     constructor(private readonly http: HttpClient) {}
 
-    public getTicketsRequest$(path: string): Observable<any> { 
-        return this.http.get<Ticket>('../assets/responces/ticket.json');    
+    public getTicketByIdRequest$(ticketId: number): Observable<Ticket | null> { 
+        if(ticketId === 1234)
+            return this.http.get<Ticket>('../assets/responces/ticket.json');   
+        
+        return of(null);
         // return this.http.get(`${environment.apiUri + path}`, 
         // {
         //      headers: {

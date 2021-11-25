@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { TicketService } from '../services';
 
 @Component({
   selector: 'app-tracking',
@@ -14,7 +15,8 @@ export class TrackingComponent implements OnInit {
 
   searchForm!: FormGroup;
   
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder,
+    private readonly ticketService: TicketService) { }
 
   ngOnInit(): void {
     this.searchForm = this.fb.group({
@@ -32,13 +34,22 @@ export class TrackingComponent implements OnInit {
     if (this.searchForm.invalid) 
      return;   
 
-    //this.invalidTicketId();
-    this.validTicketId();
-   
+    const val = Number(this.searchField.value);
+
+    this.ticketService.getTicket$(val).subscribe(x=> {
+      console.log(x);
+      if(x === null)
+        this.invalidTicketId();
+      else
+        this.validTicketId();
+    });
   }
 
   private validTicketId() {
+    console.log('id is valied');
     this.isTicketFound = true;
+    this.isTicketNotFound = false;
+    this.ticketId = undefined;
   }
 
   private invalidTicketId() {

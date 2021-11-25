@@ -1,14 +1,16 @@
 import { Injectable } from "@angular/core";
-import { map, Observable } from "rxjs";
+import { map, Observable, of } from "rxjs";
 import { RequestService } from ".";
 import { Ticket } from "../models";
 
-@Injectable()
+@Injectable({
+    providedIn: 'root'
+})
 export class TicketService{
     constructor(private readonly requestService: RequestService){}
 
-    public getTicket$(ticketId: number): Observable<Ticket>{
-        return this.requestService.getTicketsRequest$(ticketId.toString()).pipe(
+    public getTicket$(ticketId: number): Observable<Ticket | null>{
+        return this.requestService.getTicketByIdRequest$(ticketId).pipe(
             map(response => response as Ticket)
         );
     }
@@ -21,7 +23,6 @@ export class TicketService{
     }
 
     public cancelTicket$(ticketId: number): Observable<boolean> {
-        console.log(ticketId);
         return this.requestService.cancelTicketRequest$(ticketId.toString()).pipe(
             map(response => response.result as boolean)
         );

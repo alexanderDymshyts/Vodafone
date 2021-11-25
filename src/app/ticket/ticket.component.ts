@@ -27,23 +27,25 @@ export class TicketComponent implements OnInit {
     private readonly activityService: ActivityService) { }
 
   ngOnInit(): void {
-     this.ticketService.getTicket$(123).subscribe(x => {
-       const ticket: ITicket = {
-        woNum: x.woNum ?? 0,
-        woStatusText: x.woStatusText ?? '',
-        cancelable: x.cancelable,
-        reopenable: x.reopenable,
-        creationDate: x.creationDate ?? new Date(),
-       };
-
-       this.activityService.addActivities(x.activities);       
-
-       this.state.set(
-       { 
-           activitiesCount: x.activities.length,
-           activities: x.activities,
-           ticket : ticket,
-       });
+     this.ticketService.getTicket$(1234).subscribe(x => {
+       if(x !== null){
+        const ticket: ITicket = {
+          woNum: x.woNum ?? 0,
+          woStatusText: x.woStatusText ?? '',
+          cancelable: x.cancelable,
+          reopenable: x.reopenable,
+          creationDate: x.creationDate ?? new Date(),
+         };
+  
+         this.activityService.addActivities(x.activities);       
+  
+         this.state.set(
+         { 
+             activitiesCount: x.activities.length,
+             activities: x.activities,
+             ticket : ticket,
+         });
+       };     
      });
   }
 
