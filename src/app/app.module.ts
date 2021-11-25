@@ -13,11 +13,13 @@ import { HeaderComponent } from './header';
 import { ActivityService, RequestService, TicketService } from './services';
 import { TicketComponent } from './ticket/ticket.component';
 import { ToastrModule } from 'ngx-toastr';
+import { AuthenticationService } from './security';
 
 const SERVICES = [
   RequestService,
   TicketService,
-  ActivityService
+  ActivityService,
+  AuthenticationService
   // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
   // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 
