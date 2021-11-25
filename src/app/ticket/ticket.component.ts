@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { RxState } from '@rx-angular/state';
-import { ITicket, ITicketState } from '../intefaces';
+import { ITicketState } from '../intefaces';
 import { TicketService } from '../services/ticket.service';
 import { ToastrService } from 'ngx-toastr';
 import { Status } from '../enums';
 import { Router } from '@angular/router';
-import { Activity } from '../models';
+import { Activity, Ticket } from '../models';
 import { ActivityService } from '../services';
 
 @Component({
@@ -14,7 +14,23 @@ import { ActivityService } from '../services';
   styleUrls: ['./ticket.component.scss'],
   providers: [RxState]
 })
-export class TicketComponent implements OnInit {
+export class TicketComponent {
+
+  @Input() set ticket(ticket: Ticket){
+    this.activityService.addActivities(ticket.activities);
+    
+    this.state.set({
+      activitiesCount: ticket.activities.length,
+      activities: ticket.activities,
+      ticket : {
+       woNum: ticket.woNum ?? 0,
+       woStatusText: ticket.woStatusText ?? '',
+       cancelable: ticket.cancelable,
+       reopenable: ticket.reopenable,
+       creationDate: ticket.creationDate ?? new Date(),
+      },
+    });
+  }
 
   ticket$ = this.state.select('ticket');
   activitiesCount$ = this.state.select('activitiesCount');
@@ -25,41 +41,18 @@ export class TicketComponent implements OnInit {
     private readonly toaster: ToastrService,
     private readonly router: Router,
     private readonly activityService: ActivityService) { }
-
-  ngOnInit(): void {
-     this.ticketService.getTicket$(1234).subscribe(x => {
-       if(x !== null){
-        const ticket: ITicket = {
-          woNum: x.woNum ?? 0,
-          woStatusText: x.woStatusText ?? '',
-          cancelable: x.cancelable,
-          reopenable: x.reopenable,
-          creationDate: x.creationDate ?? new Date(),
-         };
-  
-         this.activityService.addActivities(x.activities);       
-  
-         this.state.set(
-         { 
-             activitiesCount: x.activities.length,
-             activities: x.activities,
-             ticket : ticket,
-         });
-       };     
-     });
-  }
-
+ 
   viewActivity(activity: Activity){    
     this.router.navigate(['/activity', activity.activityCode]);
   }
 
   reopenTicket(){
-      this.ticketService.reopenTicket$(this.state.get('ticket').woNum).subscribe(
+      this.ticketService.reopenTicket$(this.state.get('ticket').woNum.toString()).subscribe(
         x => this.showToaster(x))
   }
 
   cancelTicket() {
-    this.ticketService.cancelTicket$(this.state.get('ticket').woNum).subscribe(
+    this.ticketService.cancelTicket$(this.state.get('ticket').woNum.toString()).subscribe(
       x => this.showToaster(x))
   }
 

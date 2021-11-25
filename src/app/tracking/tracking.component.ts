@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
+import { Ticket } from '../models';
 import { TicketService } from '../services';
 
 @Component({
@@ -7,16 +9,14 @@ import { TicketService } from '../services';
   templateUrl: './tracking.component.html',
   styleUrls: ['./tracking.component.scss']
 })
-export class TrackingComponent implements OnInit {
-  
-  isTicketFound: boolean | undefined;
-  isTicketNotFound: boolean | undefined;
-  ticketId: string | undefined;
+export class TrackingComponent implements OnInit {  
+  ticket: Ticket | undefined;;
 
   searchForm!: FormGroup;
   
   constructor(private fb: FormBuilder,
-    private readonly ticketService: TicketService) { }
+    private readonly ticketService: TicketService,
+    private readonly toaster: ToastrService,) { }
 
   ngOnInit(): void {
     this.searchForm = this.fb.group({
@@ -28,34 +28,25 @@ export class TrackingComponent implements OnInit {
     return this.searchForm.get('search');
   }  
 
-  public onSubmit(): void {
-    
+  public onSubmit(): void {    
     // stop here if form is invalid
     if (this.searchForm.invalid) 
-     return;   
+     return;  
 
-    const val = Number(this.searchField.value);
-
-    this.ticketService.getTicket$(val).subscribe(x=> {
-      console.log(x);
+    this.ticketService.getTicket$(this.searchField.value).subscribe(x=> {
       if(x === null)
         this.invalidTicketId();
       else
-        this.validTicketId();
+        this.validTicketId(x);
     });
   }
 
-  private validTicketId() {
-    console.log('id is valied');
-    this.isTicketFound = true;
-    this.isTicketNotFound = false;
-    this.ticketId = undefined;
+  private validTicketId(ticket: Ticket | undefined) {     
+    this.ticket = ticket;
+    this.toaster.success('We got it :). Scroll down to see result!', 'Vodafone 4 life');
   }
 
   private invalidTicketId() {
-    this.ticketId = this.searchField.value;
-    this.searchForm.setValue({search: ''});
-    this.isTicketFound = false;
-    this.isTicketNotFound = true;
+    this.toaster.error('Oh no, ticket not found :(. Please try again!', 'Vodafone 4 life');
   }
 }

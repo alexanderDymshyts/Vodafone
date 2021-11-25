@@ -10,8 +10,8 @@ export class RequestService{
 
     constructor(private readonly http: HttpClient) {}
 
-    public getTicketByIdRequest$(ticketId: number): Observable<Ticket | null> { 
-        if(ticketId === 1234)
+    public getTicketByIdRequest$(ticketId: string): Observable<Ticket | null> { 
+        if(ticketId === '1234')
             return this.http.get<Ticket>('../assets/responces/ticket.json');   
         
         return of(null);

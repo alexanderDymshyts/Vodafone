@@ -8,8 +8,6 @@ import { Activity } from "../models";
     providedIn: 'root'
 })
 export class ActivityService extends RxState<IActivityState>{
-
-    readonly state$ = this.select();
     
     constructor(){super()}
 
@@ -18,8 +16,9 @@ export class ActivityService extends RxState<IActivityState>{
     }
 
     public getActivity$(activityId: string): Observable<Activity | undefined>{
-        return this.state$.pipe(
-            map(state => state.activities.find(activity => activity.activityCode === activityId))
+        return this.select('activities')
+        .pipe(
+            map(activities => activities.find(activity => activity.activityCode === activityId))
         );  
     }
 }

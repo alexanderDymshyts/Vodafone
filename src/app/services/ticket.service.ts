@@ -9,20 +9,19 @@ import { Ticket } from "../models";
 export class TicketService{
     constructor(private readonly requestService: RequestService){}
 
-    public getTicket$(ticketId: number): Observable<Ticket | null>{
+    public getTicket$(ticketId: string): Observable<Ticket | null>{
         return this.requestService.getTicketByIdRequest$(ticketId).pipe(
             map(response => response as Ticket)
         );
     }
 
-    public reopenTicket$(ticketId: number): Observable<boolean> {
-        console.log(ticketId);
+    public reopenTicket$(ticketId: string): Observable<boolean> {
         return this.requestService.reopenTicketRequest$(ticketId.toString()).pipe(
             map(response => response.result as boolean)
         );
     }
 
-    public cancelTicket$(ticketId: number): Observable<boolean> {
+    public cancelTicket$(ticketId: string): Observable<boolean> {
         return this.requestService.cancelTicketRequest$(ticketId.toString()).pipe(
             map(response => response.result as boolean)
         );
