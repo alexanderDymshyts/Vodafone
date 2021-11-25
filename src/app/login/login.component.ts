@@ -34,8 +34,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) 
      return;   
     
-    console.log(this.emailField.value);
-    console.log(this.passwordField.value);
+     
   }
 
 }
