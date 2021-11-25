@@ -47,12 +47,12 @@ export class TicketComponent {
   }
 
   reopenTicket(){
-      this.ticketService.reopenTicket$(this.state.get('ticket').woNum.toString()).subscribe(
+      this.ticketService.reopenTicket$(this.state.get('ticket').woNum.toString(), false).subscribe(
         x => this.showToaster(x))
   }
 
   cancelTicket() {
-    this.ticketService.cancelTicket$(this.state.get('ticket').woNum.toString()).subscribe(
+    this.ticketService.cancelTicket$(this.state.get('ticket').woNum.toString(), false).subscribe(
       x => this.showToaster(x))
   }
 

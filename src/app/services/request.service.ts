@@ -1,6 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
+import { environment } from "src/environments/environment";
 import { Ticket } from "../models";
 
 @Injectable({
@@ -8,37 +9,35 @@ import { Ticket } from "../models";
 })
 export class RequestService{
 
-    constructor(private readonly http: HttpClient) {}
+    constructor(private readonly http: HttpClient) {} 
 
-    public getTicketByIdRequest$(ticketId: string): Observable<Ticket | null> { 
-        if(ticketId === '1234')
-            return this.http.get<Ticket>('../assets/responces/ticket.json');   
-        
-        return of(null);
-        // return this.http.get(`${environment.apiUri + path}`, 
-        // {
-        //      headers: {
-        //     'Content-Type': 'application/json'
-        //     }, 
-        //     responseType: 'json'
-        // });
+    public sendGetRequest$(path: string):Observable<any>{
+        return this.http.get(`${environment.apiUri + path}`, 
+        {
+             headers: {
+            'Content-Type': 'application/json'
+            }, 
+            responseType: 'json'
+        });
     }
 
-    public reopenTicketRequest$(path: string): Observable<any> { 
-        return this.http.get<boolean>('../assets/responces/reopen-ticket.json');  
-    }
+    public sendPostRequest$(path: string, body: any): Observable<any> {
+        return this.http.post(`${environment.apiUri + path}`, JSON.stringify(body), 
+        { 
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            responseType: 'json'
+        });
+    }   
 
-    public cancelTicketRequest$(path: string): Observable<any> { 
-        return this.http.get<boolean>('../assets/responces/cancel-ticket.json'); 
+    public sendPatchRequest$(path: string, id: string, body: any): Observable<any>{
+        return this.http.patch(`${environment.apiUri + path}/${id}`, JSON.stringify(body),
+        {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            responseType: 'json'
+        });
     }
-    
-    // public sendPostRequest$(path: string, body: any): Observable<any> {
-    //     return this.http.post(`${environment.apiUri + path}`, JSON.stringify(body), 
-    //     { 
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         responseType: 'json'
-    //     });
-    // }   
 }
