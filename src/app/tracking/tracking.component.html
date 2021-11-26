@@ -7,7 +7,7 @@
             <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
               <div class="mb-3">
                 <label for="ticket_id" class="form-label">Ticket ID: </label>
-                <input formControlName="search" [class.is-invalid]="searchField.touched && searchField.invalid" type="search" class="form-control" id="ticket_id">
+                <input formControlName="search" [class.is-invalid]="searchField.touched && searchField.invalid" type="number" class="form-control" id="ticket_id">
                 <div *ngIf="searchField.touched && searchField.hasError('required')" class="d-block invalid-feedback">Please provide a Ticket ID.</div>
               </div>             
               <button [disabled]="searchForm.invalid" type="submit" class="mt-3 btn btn-primary w-100 submit-btn">Search ticket</button>

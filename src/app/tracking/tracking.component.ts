@@ -20,7 +20,7 @@ export class TrackingComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchForm = this.fb.group({
-      search: ['', [Validators.required]],
+      search: ['', [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/)]],
     });
   }
 
@@ -47,6 +47,6 @@ export class TrackingComponent implements OnInit {
   }
 
   private invalidTicketId() {
-    this.toaster.error('Oh no, ticket not found :(. Please try again!', 'Vodafone 4 life');
+    this.toaster.error('Oh no, ticket not found :(. Please try again! (Valid ticket id: 1234)', 'Vodafone 4 life');
   }
 }

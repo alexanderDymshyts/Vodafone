@@ -63,6 +63,6 @@ export class AuthenticationService{
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
         this.userSubject.next(undefined);
-        this.router.navigate(['/']);
+        this.router.navigate(['/login']);
     }  
 }

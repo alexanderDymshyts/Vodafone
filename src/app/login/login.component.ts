@@ -52,7 +52,6 @@ export class LoginComponent implements OnInit {
                 this.router.navigateByUrl('/');
             },
             error: error => {
-              this.passwordField.value = '';              
               this.toaster.error(error, 'Vodafone 4 life');
               this.toaster.info('Valid credentials: 1) email: test@vodafone.de, password: test1 2) email: test1@vodafone.de, password: test ','Vodafone is great!');
             }
