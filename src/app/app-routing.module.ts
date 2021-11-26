@@ -1,18 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ActivityComponent } from './activity';
+import { Role } from './enums';
 import { LoginComponent } from './login';
+import { AuthGuard } from './security';
 import { TrackingComponent } from './tracking';
 
 const routes: Routes = [
-  //{ path: '', component: TrackingComponent, canActivate: [AuthGuard] },  
-  { path: '', redirectTo: '/login', pathMatch: 'full'},
+  { path: '', redirectTo: '/tracking', pathMatch: 'full'},
   { path: 'login', component: LoginComponent},
-  { path: 'tracking', component: TrackingComponent},
-  { path: 'activity/:activityId', component: ActivityComponent},
+  { path: 'tracking', component: TrackingComponent, canActivate: [AuthGuard], data: {roles: [Role.User, Role.Moderator]}},
+  { path: 'activity/:activityId', component: ActivityComponent, canActivate: [AuthGuard], data: {roles: [Role.User, Role.Moderator]}},
 
   // otherwise redirect to login
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '/tracking' }
 ];
 
 @NgModule({

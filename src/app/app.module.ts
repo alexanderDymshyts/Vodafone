@@ -14,14 +14,16 @@ import { ActivityService, FakeBackendInterceptor, RequestService, TicketService 
 import { TicketComponent } from './ticket/ticket.component';
 import { ToastrModule } from 'ngx-toastr';
 import { AuthenticationService } from './security';
+import { ErrorInterceptor, JwtInterceptor } from './interceptors';
 
 const SERVICES = [
   RequestService,
   TicketService,
   ActivityService,
   AuthenticationService,
-  // { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-  // { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+  
+  { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+  { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
 
   // provider used to create fake backend
   {

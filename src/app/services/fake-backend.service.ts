@@ -1,7 +1,21 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { delay, dematerialize, materialize, mergeMap, Observable, of, throwError } from "rxjs";
-import { Ticket } from "../models";
+import { Role } from "../enums";
+
+// array of existing users
+let users = [
+    {
+        id:  1, // should bu guid
+        username: 'test@vodafone.de',
+        password: 'test1'
+    },
+    {
+        id:  2, // should bu guid
+        username: 'test1@vodafone.de',
+        password: 'test'
+    }
+];
 
 // array of existing tickets
 let tickets = [
@@ -64,10 +78,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
                         return ok(true);
                     case url.match(/\/tickets\/cancel\/\/\d+$/) && method === 'PATCH':
                         return ok(false);
-                    // case url.endsWith('/users/authenticate') && method === 'POST':
-                    //     return authenticate();                   
-                    // case url.endsWith('/users') && method === 'GET':
-                    //     return getUsers();
+                    case url.endsWith('/auth/login') && method === 'POST':
+                        return authenticate();  
                     default:
                         // pass through any requests not handled above
                         return next.handle(request);
@@ -76,6 +88,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
             function getTicket(){
                 
+                if(!isLoggedIn())
+                    return unauthorized();
+
                 const ticket = tickets.find(x => x.woNum === idFromUrl());
                 if(ticket)
                     return ok(ticket);
@@ -84,50 +99,17 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }            
     
             // route functions
-    
-            // function authenticate() {
-            //     const { username, password } = body;
-            //     const user = users.find((x: { username: any; password: any; }) => x.username === username && x.password === password);
-                
-            //     if (!user) return error('Username or password is incorrect');
-    
-            //     // add refresh token to user
-            //     user.refreshTokens.push(generateRefreshToken());
-            //     localStorage.setItem(usersKey, JSON.stringify(users));
-    
-            //     return ok({
-            //         id: user.id,
-            //         username: user.username,
-            //         firstName: user.firstName,
-            //         lastName: user.lastName,
-            //         jwtToken: generateJwtToken(),
-            //         role: user.role
-            //     })
-            // }
-    
-            // function refreshToken() {
-            //     const refreshToken = getRefreshToken();
-                
-            //     if (!refreshToken) return unauthorized();
-    
-            //     const user = users.find((x: { refreshTokens: string | string[]; }) => x.refreshTokens.includes(refreshToken));
-                
-            //     if (!user) return unauthorized();
-    
-            //     // replace old refresh token with a new one and save
-            //     user.refreshTokens = user.refreshTokens.filter((x: string) => x !== refreshToken);
-            //     user.refreshTokens.push(generateRefreshToken());
-            //     localStorage.setItem(usersKey, JSON.stringify(users));
-    
-            //     return ok({
-            //         id: user.id,
-            //         username: user.username,
-            //         firstName: user.firstName,
-            //         lastName: user.lastName,
-            //         jwtToken: generateJwtToken(),
-            //         role: user.role,
-            //     })
-            // }  
+            function authenticate() {
+                const { username, password } = JSON.parse(body);
+                const user = users.find(x => x.username === username && x.password === password);
+                if (!user) return error('Username or password is incorrect');
+                return ok({
+                    id: user.id,
+                    username: user.username,
+                    role: Role.User,
+                    token: generateJwtToken()
+                })
+            }    
            
             // helper functions
 
@@ -141,53 +123,36 @@ export class FakeBackendInterceptor implements HttpInterceptor {
             }
     
             function error(message: any) {
-                return throwError(()=>{ error: { message } });
+                const err = { status: 500, error: { message: message}};
+                
+                return throwError(()=>err);
             }
     
             function unauthorized() {
                 const err = { status: 401, error: { message: 'Unauthorised'}};
                 return throwError(()=> err);
-            }
+            }   
     
             function isLoggedIn() {
-                return headers.get('Authorization') === 'Bearer fake-jwt-token';
+                // check if jwt token is in auth header
+                const authHeader = headers.get('Authorization');
+                
+                if (!authHeader?.startsWith('Bearer fake-jwt-token')) 
+                    return false;
+    
+                // check if token is expired
+                const jwtToken = JSON.parse(atob(authHeader.split('.')[1]));
+                const tokenExpired = Date.now() > (jwtToken.exp * 1000);
+                if (tokenExpired) 
+                    return false;
+        
+                return true;                
             }
     
-            // function isLoggedIn() {
-            //     // check if jwt token is in auth header
-            //     const authHeader = headers.get('Authorization');
-            //     // if(authHeader !== null) {
-            //         if (!authHeader?.startsWith('Bearer fake-jwt-token')) return false;
-    
-            //         // check if token is expired
-            //         const jwtToken = JSON.parse(atob(authHeader.split('.')[1]));
-            //         const tokenExpired = Date.now() > (jwtToken.exp * 1000);
-            //         if (tokenExpired) return false;
-        
-            //         return true;
-            //     // }
-            //     // return false;
-            // }
-    
-            // function generateJwtToken() {
-            //     // create token that expires in 15 minutes
-            //     const tokenPayload = { exp: Math.round(new Date(Date.now() + 15*60*1000).getTime() / 1000) }
-            //     return `fake-jwt-token.${btoa(JSON.stringify(tokenPayload))}`;
-            // }
-    
-            // function generateRefreshToken() {
-            //     const token = new Date().getTime().toString();
-    
-            //     // add token cookie that expires in 7 days
-            //     const expires = new Date(Date.now() + 7*24*60*60*1000).toUTCString();
-            //     document.cookie = `fakeRefreshToken=${token}; expires=${expires}; path=/`;
-    
-            //     return token;
-            // }
-    
-            // function getRefreshToken() {
-            //     // get refresh token from cookie
-            //     return (document.cookie.split(';').find(x => x.includes('fakeRefreshToken')) || '=').split('=')[1];
-            // }
+            function generateJwtToken() {
+                // create token that expires in 15 minutes
+                const tokenPayload = { exp: Math.round(new Date(Date.now() + 15*60*1000).getTime() / 1000) }
+                return `fake-jwt-token.${btoa(JSON.stringify(tokenPayload))}`;
+            }
         }
 }

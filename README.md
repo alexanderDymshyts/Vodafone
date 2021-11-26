@@ -31,8 +31,9 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 What can be done:
 1. Several languages
 2. JWT(advanced) + SSO
-3. Better Unit and E2E tests
+3. Unit and E2E tests
 4. Toast for button result (advanced)
 5. Collapse buttons after they are clicked
 6. Catch exseptions
-7. ticket service with rxState
+
+Attention!!! Token valid only 15 minutes!!!
